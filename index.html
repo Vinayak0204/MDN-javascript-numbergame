@@ -104,43 +104,23 @@
 
 
             }
-            else if(userGuess <randomNumber){
-                if (totGuesses==10){
+            else if(totGuesses==10){
                     restart();
                     lastResult.style.display = "block";
                     lastResult.textContent = "!!!GAME OVER!!!";
-                } else {
-                    lowOrHi.style.display = "block";
+            }
+            else {
+                lowOrHi.style.display = "block";
+                lastResult.style.display = "block";
+                lastResult.textContent = "Wrong!";
+                lastResult.style.backgroundColor = "Red";
+                incorrect();
+                if(userGuess <randomNumber) {
                     lowOrHi.textContent = "You guessed too low!";
-                    lastResult.style.display = "block";
-                    lastResult.textContent = "Wrong!";
-                    lastResult.style.backgroundColor = "Red";
-                    incorrect();
+                    } else {lowOrHi.textContent = "You guessed too high!";}     
                 }
-
+            }
                 
-            }
-            else if(userGuess > randomNumber){
-                if (totGuesses==10){
-                    restart();
-                    lastResult.style.display = "block";
-                    lastResult.textContent = "!!!GAME OVER!!!";
-                } else {
-                    lowOrHi.style.display = "block";
-                    lowOrHi.textContent = "You guessed too high!";
-                    lastResult.style.display = "block";
-                    lastResult.textContent = "Wrong!";
-                    lastResult.style.backgroundColor = "Red";
-                    incorrect();
-                }
-            }
-            
-        }
-
-
-
-      
-
     </script>
   </body>
 </html>
