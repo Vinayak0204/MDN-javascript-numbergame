@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+
+    <title>Number guessing game</title>
+
+    <style>
+      html {
+        font-family: sans-serif;
+      }
+
+      body {
+        width: 50%;
+        max-width: 800px;
+        min-width: 480px;
+        margin: 0 auto;
+      }
+      
+      .form input[type="number"] {
+        width: 200px;
+      }
+
+      .lastResult {
+        color: white;
+        padding: 3px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Number guessing game</h1>
+
+    <p>We have selected a random number between 1 and 100. See if you can guess it in 10 turns or fewer. We'll tell you if your guess was too high or too low.</p>
+
+    <div class="form">
+      <label for="guessField">Enter a guess: </label>
+      <input type="number" min="1" max="100" required id="guessField" class="guessField">
+      <input type="submit" value="Submit guess" class="guessSubmit">
+    </div>
+
+    <div class="resultParas">
+      <p class="guesses"></p>
+      <p class="lastResult"></p>
+      <p class="lowOrHi"></p>
+    </div>
+
+    <script>
+        let randomNumber = Math.floor(Math.random() * 100) + 1;
+        var guessField = document.querySelector('.guessField');
+        var guessSubmit = document.querySelector('.guessSubmit');
+        var resultParas = document.querySelector ('.resultParas');
+        var guesses = document.querySelector ('.guesses');
+        var lastResult = document.querySelector ('.lastResult');
+        var lowOrHi = document.querySelector ('.lowOrHi');
+        var form = document.querySelector ('.form');
+        var previousGuesses = "Previous Guesses : "
+        guesses.style.display = "none";
+        var reset = document.createElement('button');
+        reset.innerHTML= "Start new Game";
+        guessField.focus();
+        var totGuesses = 1;
+
+        function incorrect(){
+                guessField.value=''
+                guessField.focus();
+                previousGuesses = previousGuesses+' '+userGuess;
+                guesses.textContent= previousGuesses;
+                guesses.style.display = "block";
+                totGuesses++;
+                return totGuesses;
+        }
+        function restart(){
+            previousGuesses = previousGuesses+' '+userGuess;
+            guesses.textContent= previousGuesses;
+            guesses.style.display = "block";
+            guessField.value = '';
+            guessField.disabled = true;
+            guessSubmit.disabled = true;
+            lowOrHi.style.display = "none";
+            resultParas.appendChild (reset);
+            reset.style.display = "block";
+        }
+
+        guessSubmit.addEventListener('click', checkFunction);
+        reset.addEventListener('click',resetFunction);
+        function resetFunction(){
+            randomNumber = Math.floor(Math.random() * 100) + 1;
+            guessField.disabled = false;
+            guessSubmit.disabled = false;
+            previousGuesses = "Previous Guesses : "
+            guesses.style.display = "none";
+            reset.style.display = "none";
+            lastResult.style.display = "none";
+            guessField.focus();
+            totGuesses = 1;
+        }
+        function checkFunction(){
+            userGuess= guessField.value;
+            if (userGuess == randomNumber){
+                lastResult.textContent = "Congratulations! You got it right!"
+                lastResult.style.backgroundColor = "Green";
+                restart();
+
+
+            }
+            else if(totGuesses==10){
+                    restart();
+                    lastResult.style.display = "block";
+                    lastResult.textContent = "!!!GAME OVER!!!";
+            }
+            else {
+                lowOrHi.style.display = "block";
+                lastResult.style.display = "block";
+                lastResult.textContent = "Wrong!";
+                lastResult.style.backgroundColor = "Red";
+                incorrect();
+                if(userGuess <randomNumber) {
+                    lowOrHi.textContent = "You guessed too low!";
+                    } else {lowOrHi.textContent = "You guessed too high!";}     
+                }
+            }
+                
+    </script>
+  </body>
+</html>
